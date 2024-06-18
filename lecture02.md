@@ -10,9 +10,9 @@
 
 
 2.学んだこと
-　<br>
+<br>
 　-Git Hubアカウントとアクセストークンの作成。
-　<br>
+<br>
 　　　-Fine-grained personal access token
 　　　<br>
 　　　-Fine-grained personal access token には、personal access tokens (classic) に勝るいくつかの利点があります。
@@ -26,12 +26,12 @@
 
 
 　-リポジトり作成～Git Hubへのプルリクエストまで。
-　　　　<br>
+<br>
 　　　　-リポジトリの名前は重要！文字から始めないとターミナル開いたのちにオプションと勘違いされてエラーが出る。
-        <br>
-        　　　　-ls コマンドでファイルがあるか確認。
-        <br>
+<br>
+　　　　-ls コマンドでファイルがあるか確認。
+<br>
 　　　　-居場所を見失ったらgit branch
-　　　　<br>
+<br>
 　　　　-各リポジトリと各トークンに権限設定があるから要確認！！！
 
