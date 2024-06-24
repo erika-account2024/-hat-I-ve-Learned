@@ -14,6 +14,7 @@
 3. DBサーバーについて。  
 
 - 名前とバージョン。停止させたら起動できなかった。  
+- rails:構成管理ツール：Bundler  
 
 ![sqlvr](images/sqlvr.png)  
 ![sql](images/sql.png)  
