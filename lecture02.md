@@ -1,21 +1,21 @@
-###第二回の講義を聞いて###
+# 第二回の講義を聞いて  
 
-1.感想
-　-本当難しかった！！
-　-権限やパスワードの設定がどこにあってなんの操作をしてしているのかわからなかった。
-　-調べたりいろんな人に聞きながらヒントをもらって、解決できなかったことができるようになるとうれしい!
+1.感想  
+　- 本当難しかった！！  
+　- 権限やパスワードの設定がどこにあってなんの操作をしてしているのかわからなかった。   
+　- 調べたりいろんな人に聞きながらヒントをもらって、解決できなかったことができるようになるとうれしい!
 
 
-2.学んだこと
-　-Git Hubアカウントとアクセストークンの作成。
-　　　-Fine-grained personal access token
-      -Fine-grained personal access token には、personal access tokens (classic) に勝るいくつかの利点があります。
+2.学んだこと  
+　- Git Hubアカウントとアクセストークンの作成。  
+　　　- Fine-grained personal access token  
+　　　- - Fine-grained personal access token には、personal access tokens (classic) に勝るいくつかの利点があります。  
 
-      -各トークンは、1 人のユーザーまたは 1 つの Organization が所有するリソースにのみアクセスできる。
-      -特定のリポジトリにのみアクセスできる。
-      -特定のアクセス許可が付与されます。これにより、personal access tokens (classic) より細かく制御できる。
-      -有効期限がある。。
-      -組織の所有者は、組織のリソースにアクセスできるfine-grained personal access tokenに承認を要求できる。
+  - 各トークンは、1 人のユーザーまたは 1 つの Organization が所有するリソースにのみアクセスできる。  
+  - 特定のリポジトリにのみアクセスできる。  
+  - 特定のアクセス許可が付与されます。これにより、personal access tokens (classic) より細かく制御できる。  
+  - 有効期限がある。  
+  - 組織の所有者は、組織のリソースにアクセスできるfine-grained personal access tokenに承認を要求できる。
 
 
 
