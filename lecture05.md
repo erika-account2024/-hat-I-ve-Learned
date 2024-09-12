@@ -157,10 +157,71 @@ http://IPアドレス:3000
   
 画像  
   
-
+## Nginx単体起動  
+1. yumのアップデート  
+sudo yum updete  
+2. 追加のソフトウェアを管理する為のツールをインストール  
+sudo yum install amazon-linux-extras  
+3. Nginxのパッケージがあるかの確認  
+amazon-linux-extras | grep "nginx"  
+4. Nginxのインストール  
+sudo yum clean metadata  
+sudo yum install nginx  
+5. Nginxの自動起動設定  
+sudo systemctl enable nginx  
+6. 起動する  
+sudo systemctl start nginx  
+* active(running)であること確認。
+7. AWSよりec2セキュリティー編集  
+* 追加：80ポート。  
+8. ブラウザで確認  
+http://IPアドレス  
   
-
+画像  
   
+## Nginxと組み込みサーバー、UNIXsocketを組み合わせてのアプリ作動  
+1. Nginxの設定ファイルを編集  
+* 設定ファイルにpumaとの連携を追加する。  
+2. Nginxの設定ディレクトリーに移動  
+cd /etc/nginx/conf.d  
+3. vi nginx.conf.dにて編集  
+user ec2-user
 
+upstream puma {
+    server unix:///home/ec2-user/raisetech-live8-sample-app/tmp/sockets/puma.sock;
+}
+    server {
+        listen       80;
+        #listen       [::]:80;
+        server_name  ec2-3.112.82.117.ap-northeast-1.compute.amazonaws.com;
 
+        access_log /var/log/nginx/access.log;
+        error_log  /var/log/nginx/error.log;
+
+        root         /home/ec2-user/raisetech-live8-sample-app/public;
+       try_files $uri/index.html $uri @puma;
+
+    location @puma {
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_pass http://puma;
+   }  
+  
+4. 設定ファイルにエラーがないかを確認  
+sudo nginx -t  
+* エラー返答がなければOK！  
+5. Nginxを再セット  
+sudo systemctl restart nginx  
+6. 起動  
+sudo systemctl status nginx  
+7. ブラウザで確認  
+http://IPアドレス  
+8. AWSよりec2セキュリティー編集  
+*削除：3000  
+9. ブラウザで確認  
+http://IPアドレス  
+  
+画像  
+  
 
