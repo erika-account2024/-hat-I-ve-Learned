@@ -187,7 +187,7 @@ cd /etc/nginx/conf.d
 3. vi nginx.conf.dにて編集  
 user ec2-user
 
-upstream puma {
+* upstream puma { 
     server unix:///home/ec2-user/raisetech-live8-sample-app/tmp/sockets/puma.sock;
 }
     server {
@@ -214,12 +214,10 @@ sudo nginx -t
 5. Nginxを再セット  
 sudo systemctl restart nginx  
 6. 起動  
-sudo systemctl status nginx  
-7. ブラウザで確認  
-http://IPアドレス  
-8. AWSよりec2セキュリティー編集  
+sudo systemctl status nginx    
+7. AWSよりec2セキュリティー編集  
 *削除：3000  
-9. ブラウザで確認  
+8. ブラウザで確認  
 http://IPアドレス  
   
 画像  
