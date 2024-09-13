@@ -86,11 +86,9 @@ bin/dev
 *ポート3000を追加。  
 14. ブラウザからアクセス　　
 http://IPアドレス:3000  
-  
 ![puma](images/第５puma.png)  
-![puma2](images/第５puma2.png)    
-
-
+![puma2](images/第５puma2.png)  
+      
 ## 画像表示ツールのインストール  
 1, vips(ファイル)をインストール  
 wget URL vips-8.15.3 tar.xz  
@@ -157,7 +155,8 @@ bundle exec puma -C config/puma.rb
 5. ブラウザで確認  
 http://IPアドレス:3000  
   
-画像  
+! [UNIX](images/第５UNIX.png)   
+! [UNIX](images/第５UNIX2.png)  
   
 ## Nginx単体起動  
 1. yumのアップデート  
@@ -179,7 +178,7 @@ sudo systemctl start nginx
 8. ブラウザで確認  
 http://IPアドレス  
   
-画像  
+! [Nginx](images/第５Nginx.png)   
   
 ## Nginxと組み込みサーバー、UNIXsocketを組み合わせてのアプリ作動  
 1. Nginxの設定ファイルを編集  
@@ -222,6 +221,8 @@ sudo systemctl status nginx
 8. ブラウザで確認  
 http://IPアドレス  
   
-画像  
+! [NginxとUNIX](images/第５NginxとUNIX.png)  
+! [NginxとUNIX2](images/第５NginxとUNIX.2.png)  
+
   
 
