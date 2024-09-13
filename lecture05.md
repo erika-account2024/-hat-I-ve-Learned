@@ -87,8 +87,10 @@ bin/dev
 14. ブラウザからアクセス　　
 http://IPアドレス:3000  
   
-画像  
-  
+![puma](images/第５puma.png)  
+![puma2](images/第５puma2.png)    
+
+
 ## 画像表示ツールのインストール  
 1, vips(ファイル)をインストール  
 wget URL vips-8.15.3 tar.xz  
