@@ -155,8 +155,8 @@ bundle exec puma -C config/puma.rb
 5. ブラウザで確認  
 http://IPアドレス:3000  
   
-! [UNIX](images/第５UNIX.png)   
-! [UNIX](images/第５UNIX2.png)  
+![UNIX](images/第５UNIX.png)   
+![UNIX](images/第５UNIX2.png)  
   
 ## Nginx単体起動  
 1. yumのアップデート  
@@ -178,7 +178,7 @@ sudo systemctl start nginx
 8. ブラウザで確認  
 http://IPアドレス  
   
-! [Nginx](images/第５Nginx.png)   
+![Nginx](images/第５Nginx.png)   
   
 ## Nginxと組み込みサーバー、UNIXsocketを組み合わせてのアプリ作動  
 1. Nginxの設定ファイルを編集  
@@ -221,8 +221,8 @@ sudo systemctl status nginx
 8. ブラウザで確認  
 http://IPアドレス  
   
-! [NginxとUNIX](images/第５NginxとUNIX.png)  
-! [NginxとUNIX2](images/第５NginxとUNIX.2.png)  
+![NginxとUNIX](images/第５NginxとUNIX.png)  
+![NginxとUNIX2](images/第５NginxとUNIX.2.png)  
 
   
 
