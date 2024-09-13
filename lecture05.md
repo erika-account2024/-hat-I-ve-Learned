@@ -178,7 +178,7 @@ sudo systemctl start nginx
 8. ブラウザで確認  
 http://IPアドレス  
   
-![Nginx](images/第５Nginx.png)   
+![Nginx](images/第5Nginx.png)   
   
 ## Nginxと組み込みサーバー、UNIXsocketを組み合わせてのアプリ作動  
 1. Nginxの設定ファイルを編集  
