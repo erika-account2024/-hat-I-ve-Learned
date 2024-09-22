@@ -90,7 +90,7 @@ http://IPアドレス:3000
 ![puma2](images/第５puma2.png)  
       
 ## 画像表示ツールのインストール  
-1, vips(ファイル)をインストール  
+1. vips(ファイル)をインストール  
 wget URL vips-8.15.3 tar.xz  
 2.  凍結していて中身が機能しないので解凍  
 tar -xf vips -8.15.3 tar-xz  
@@ -225,4 +225,38 @@ http://IPアドレス
 ![NginxとUNIX2](images/第５NginxとUNIX.2.png)  
 
   
+## ALBを設置をしたうえでブラウザで確認
+1. ターゲットグループの作成。
+![ターゲット](images/第５ターゲットグループ.png)
+2. ALBの作成
+![ALB](images/第５ALBのドメインネーム.png)
+3. ALB用のセキュリティーグループ作成
+私のパソコン
+↓
+ALB(in:PCのIP)
+↓
+ec2(in:SSH;22;PCのIP,ALBセキュリティグループ;80;HTTP)
+↓
+RDS(in:EC2セキュリティーグループ;3306;MYSQL)
+4. ブラウザで確認
+![error](images/第５エラー.png)  
+5. configの内容を変更  
+* etc/nginx/nginx.conf
+server_name ALBのドメインネーム  
+* cd サンプルアプリ  
+config/enviroments/development.rb  
+config.host <<"ALBのドメインネーム"  
+6. キャッシュの設定  
+bin/rails dev:cache
+* 静的ファイルや一部の動的なコンテンツが保存され、次回以降のリクエストで再利用される。  
+7. ブラウザで確認  
+ALBドメインネーム  
+![ブラウザ](images/第５ブラウザ.png)  
+8. 流れ  
+8-1 ブラウザからALBにアクセス。  
+8-2 ALBからNginxリクエスト転送。(server_nameがALBのドメインと一致しているためリクエスト処理してくれる)  
+8-3 Nginxからpumaへリクエストを転送  
+8-4 pumaがサンプルアプリにリクエストを渡す。(アプリはconfig.hostでALBのドメインを許可しているためリクエストを受け入れて処理)  
+8-5 アプリがレスポンスを作成  
+8-6 レスポンスをNginxが受け取り、ブラウザに渡す。  
 
