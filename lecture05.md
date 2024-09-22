@@ -230,24 +230,24 @@ http://IPアドレス
 ![ターゲット](images/第５ターゲットグループ.png)
 2. ALBの作成
 ![ALB](images/第５ALBのドメインネーム.png)
-3. ALB用のセキュリティーグループ作成
-私のパソコン
-↓
-ALB(in:PCのIP)
-↓
-ec2(in:SSH;22;PCのIP,ALBセキュリティグループ;80;HTTP)
-↓
-RDS(in:EC2セキュリティーグループ;3306;MYSQL)
-4. ブラウザで確認
+3. ALB用のセキュリティーグループ作成  
+私のパソコン  
+↓  
+ALB(in:PCのIP)  
+↓  
+ec2(in:SSH;22;PCのIP,ALBセキュリティグループ;80;HTTP)  
+↓  
+RDS(in:EC2セキュリティーグループ;3306;MYSQL)  
+4. ブラウザで確認  
 ![error](images/第５エラー.png)  
 5. configの内容を変更  
-* etc/nginx/nginx.conf
+* etc/nginx/nginx.conf  
 server_name ALBのドメインネーム  
 * cd サンプルアプリ  
 config/enviroments/development.rb  
 config.host <<"ALBのドメインネーム"  
 6. キャッシュの設定  
-bin/rails dev:cache
+bin/rails dev:cache  
 * 静的ファイルや一部の動的なコンテンツが保存され、次回以降のリクエストで再利用される。  
 7. ブラウザで確認  
 ALBドメインネーム  
