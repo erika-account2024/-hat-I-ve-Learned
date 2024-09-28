@@ -259,4 +259,50 @@ ALBドメインネーム
 8-4 pumaがサンプルアプリにリクエストを渡す。(アプリはconfig.hostでALBのドメインを許可しているためリクエストを受け入れて処理)  
 8-5 アプリがレスポンスを作成  
 8-6 レスポンスをNginxが受け取り、ブラウザに渡す。  
+  
+# s3作成  
+1. s3を作成して、バケットとリージョンを指定して作成。  
+2. IAMロール作成。  
+* このIAMをec2にアタッチする。  
+3. ec2にログインして確認。  
+aws s3 ls  
+作成日付やバケット名  
+4. セキュリティー保護  
+* アクセスIDとシークレットアクセスキーを環境変数に変える。  
+export AWS_ACCESS_KEY_ID=your_access_key_id  
+export AWS_SECRET_ACCESS_KEY=your_secret_access_key  
+source ~/. bashrc  
+確認：echo $AWS_ACCESS_KEY_ID  
+  
+* Git Hub誤送信予防  
+今回キーが見つからなかったので新しく作り直し。  
+rm config/credentials/development.yml.enc  
+EDITTOR=vi rails credentials:edit --environment development  
+* gitignoreに追加  
+echo "config/credentials/development.key">>.gitignore  
+git add .gitignore  
+git commit -m"Add devellopment.key to .gitignore"  
+5. S3をアプリの中にセット  
+cd アプリ/config/  
+vi storage.ymlに以下を追加。  
+amazon:s3  
+bucket: <%=ENV['アクセスキーID']%>  
+access_key_id: <%ENV['シークレットキー']%>  
+  
+config/environments/development.rbに追加。  
+config.active.atorage.service:amazon  
+
+# アップロードとダウンロード  
+* ec2(loacal)から  
+aws s3 cp アップロードしたいローカルのファイル名　s3://バケット名/フォルダ名/  
+![ローカル](images/第５：ローカル.png)  
+![ローカル](images/第５ブラウザから.png)  
+* s3から  
+![S3](images/第５：ｓ３.png)  
+![s3](images/第５：ｓ３から.png)  
+※一部スペルミスやブラウザ不具合から異なる部分あり。  
+  
+# 構成図  
+![構成図](images/第五回構成図.drawio.png)  
+
 
