@@ -296,7 +296,7 @@ config.active.atorage.service:amazon
 * ec2(loacal)から  
 aws s3 cp アップロードしたいローカルのファイル名　s3://バケット名/フォルダ名/  
 ![ローカル](images/第５：ローカル.png)  
-![ローカル](images/第５ブラウザから.png)  
+![ローカル](images/第５ローカルから.png)  
 * s3から  
 ![S3](images/第５：ｓ３.png)  
 ![s3](images/第５：ｓ３から.png)  
