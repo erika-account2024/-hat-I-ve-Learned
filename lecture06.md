@@ -19,9 +19,10 @@ ConsoleLoginを確かめました。
   
 ## 利用見積もり:第五回を想定。  
 [見積もり料金はこちら](https://calculator.aws/#/estimate?id=fce50a32bfdca23fc90674baac34e96b42dc24c1)  
-- EC2の料金  
+[10.14変更しました](https://calculator.aws/#/estimate?id=f95e556c866818e0d07e9c292e94c936f91f7144)   
+* EC2の料金  
 ![free](images/第６回EC2.png)  
-- 先月の請求(９月分)  
+* 先月の請求(９月分)  
 ![９月](images/第６回０９月.png)  
 ![コスト](images/第６回コスト表.png)  
   
