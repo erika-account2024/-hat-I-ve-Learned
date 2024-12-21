@@ -73,6 +73,10 @@ sudo systemctl restart puma
 sudo systemctl restart nginx
 ````
 5. ブラウザで確認。  
-https://サブメイン
+https://サブメイン  
+
+### 参考URL  
+[HTTPS接続](https://iret.media/49491)  
+[証明確認](https://www.cman.jp/network/support/ssl.html)
 
 
