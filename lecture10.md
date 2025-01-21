@@ -1,5 +1,8 @@
 # 第１０回 Cloudformation スタック作成  
   
+## 今回の構成図  
+![第１０回構成図](images/第１０構成図.drawio.png)
+  
 - [TemplateFormat10.yml](/Templates10/TemplateFormat10.yml)   
 - [参考にしたURL](https://techblog.nhn-techorus.com/archives/24028)  
   
@@ -40,7 +43,7 @@
 ![EC2へ接続](images/第１０EC2へ接続.png)  
   
 ### RDSへ接続  
-![RDSへ接続](images/第１０SQLへ接続.png)
+![RDSへ接続](images/第１０SQLへ接続.png)  
   
 ## 感想  
 第４回で作成した内容を文字おこしで作成して、何を書いているのか、どうやって作成するのかもわからなかった。慣れて、楽しく思う頃には、エラーと格闘していました。作り直しについて、書かれて構文を手直しするだけでいいのでとても簡単で、時間もかからない素敵なサービスだと認識できました。
