@@ -1,6 +1,6 @@
 # 第１０回 Cloudformation スタック作成  
   
-- [TemplateFormat10.yml](/Templates10/TemplateFormat10)   
+- [TemplateFormat10.yml](/Templates10/TemplateFormat10.yml)   
 - [参考にしたURL](https://techblog.nhn-techorus.com/archives/24028)  
   
 ## 結果
