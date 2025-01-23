@@ -3,8 +3,8 @@
 - [TemplateFormat10.yml](/Templates10/TemplateFormat10.yml)
 - [参考にしたURL](https://techblog.nhn-techorus.com/archives/24028)  
 
-## 今回の構成図:01.23に変更しました。  
-![第１０回構成図](images/再第１０構成図.drawio.png)
+## 今回の構成図:01.24に変更しました。  
+![第１０回構成図](images/第１０回構成図.drawio.png)
     
 ## 結果
   
