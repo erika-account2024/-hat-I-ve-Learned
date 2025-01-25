@@ -464,7 +464,7 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub TargetGroup-${NameBase}
-    DependsOn: MyDBInstance 
+    DependsOn: MyEC2Instance 
 
 
 
