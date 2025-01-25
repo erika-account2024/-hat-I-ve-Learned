@@ -327,13 +327,6 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Sub bucket-${NameBase}
-      LifecycleConfiguration:
-        Rules:
-          - Id: IntelligentTierRule
-            Status: Enabled
-            Transitions:
-              - TransitionInDays: 0
-                StorageClass: INTELLIGENT_TIERING
       Tags:
         - Key: Name
           Value: !Sub bucket-${NameBase}
