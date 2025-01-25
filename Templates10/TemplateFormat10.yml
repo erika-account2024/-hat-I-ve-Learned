@@ -458,6 +458,8 @@ Resources:
       Protocol: HTTP
       Port: 80
       TargetType: instance
+      Targets:
+        - Id: !Ref MyEC2Instance
       HealthCheckPath: /
       Matcher:
         HttpCode: "200"
