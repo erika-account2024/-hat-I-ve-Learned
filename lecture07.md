@@ -44,11 +44,11 @@ Route53ではCNAMEが確認できる。
 Route53で該当するホストゾーンに移動。  
 ACMが指定しているCNAMEをレコードに追加する。
 AWSに登録しているアドレスに承認用のURLが届くのでクリック。  
-![メールを確認した後の画面](images/HTTPSメール.png)
+![メールを確認した後の画面](images/lecture07/HTTSメール.png)
   
 7. ステータスの確認。  
 ACMに移動して、レコードが正しく設定されていればステータスが”発行済み”になる。 Route53ではAが確認できる。  
-![route53で確認できるタイプ](images/HTTPSネーム.png)
+![route53で確認できるタイプ](images/lecture07/HTTPSネーム.png)
 
 ### AWS側の変更  
 1. セキュリティーグループの変更。  
