@@ -1,0 +1,499 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description:  Create VPC,Security,EC2,S3,ALB,Targetgroup and RDS
+
+Parameters:
+  NameBase:
+    Description: this is base name.
+    Type: String
+    Default: lecture10
+
+
+  # VPC
+  VPCCIDR:
+    Type: String
+    Default: 10.0.0.0/16
+
+
+  # Public
+  PublicSubnetCIDR1:
+    Type: String
+    Default: 10.0.0.0/20
+
+  PublicSubnetCIDR2:
+    Type: String
+    Default: 10.0.16.0/20
+
+  PublicSubnetAZ1:
+    Type: String
+    Default: ap-northeast-1a
+
+  PublicSubnetAZ2:
+    Type: String
+    Default: ap-northeast-1c
+
+
+  # Private
+  PrivateSubnetCIDR1:
+    Type: String
+    Default: 10.0.128.0/20
+
+  PrivateSubnetCIDR2:
+    Type: String
+    Default: 10.0.144.0/20
+
+  PrivateSubnetAZ1:
+    Type: String
+    Default: ap-northeast-1a
+
+  PrivateSubnetAZ2:
+    Type: String
+    Default: ap-northeast-1c
+
+
+  # EC2
+  EC2InstanceAMI:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
+    Description: The AMI ID for the EC2 instance
+
+
+  InstanceType:
+    Type: String
+    Default: t2.micro
+    Description: EC2 instance type
+
+
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Name of an existing EC2 KeyPair to enable SSH access
+
+
+  # RDS
+  DBMasterUsername:
+    Type: String
+    Description: Master username for the detabase
+    Default: admin
+    AllowedPattern: "[a-zA-Z0-9]*"
+    ConstraintDescription: The username can only contain alphanumeric characters.
+
+
+  DBMasterPassword:
+    Type: String
+    Description: Master password for the database
+    NoEcho: true
+    MinLength: 8
+    MaxLength: 41
+    AllowedPattern: "[a-zA-Z0-9!@#$%^&*]*"
+    ConstraintDescription: Generate a password that is 8-41 characters long and contains alphanumeric characters and !@#$%^&*.
+    
+   
+   
+Resources:
+
+# -------------------------------------------------#
+# VPC 
+# -------------------------------------------------#                   
+  MyVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VPCCIDR
+      InstanceTenancy: default
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      Tags:
+        - Key: Name
+          Value: !Sub vpc-${NameBase}
+
+
+  MyInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Sub igw-${NameBase}   
+     
+           
+  MyInternetGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref MyInternetGateway
+      VpcId: !Ref MyVPC
+
+
+
+# -------------------------------------------------#
+# Subnet
+# -------------------------------------------------#
+  MyPublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: !Ref PublicSubnetCIDR1
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: !Ref PublicSubnetAZ1
+      Tags:
+        - Key: Name
+          Value: !Sub publicsubnet1-${NameBase}
+
+
+  MyPublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: !Ref PublicSubnetCIDR2
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: !Ref PublicSubnetAZ2
+      Tags:
+        - Key: Name
+          Value: !Sub publicsubnet2-${NameBase}
+
+
+  MyPrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: !Ref PrivateSubnetCIDR1
+      AvailabilityZone: !Ref PrivateSubnetAZ1
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Sub privatesubnet1-${NameBase}
+
+
+  MyPrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: !Ref PrivateSubnetCIDR2
+      AvailabilityZone: !Ref PrivateSubnetAZ2
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Sub privatesubnet2-${NameBase}
+
+
+
+# -------------------------------------------------#
+# RouteTable
+# -------------------------------------------------#
+  MyPublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref MyVPC
+      Tags:
+        - Key: Name
+          Value: !Sub publictable-${NameBase}
+
+
+  MyPrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref MyVPC
+      Tags:
+        - Key: Name
+          Value: !Sub praivateroutetable-${NameBase}
+
+
+
+# ------------------------------------------------#
+# Routing
+# ------------------------------------------------#
+  RouteTablerPublic:        
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref MyPublicRouteTable
+      GatewayId: !Ref MyInternetGateway
+      DestinationCidrBlock: 0.0.0.0/0
+
+
+
+# -------------------------------------------------#
+# RouteTable Associate
+# -------------------------------------------------# 
+  AssociateRouteTablePublicSubnet1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref MyPublicRouteTable
+      SubnetId: !Ref MyPublicSubnet1
+
+
+  AssociateRouteTablePublicSunet2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref  MyPublicRouteTable
+      SubnetId: !Ref MyPublicSubnet2
+
+
+  AssociateRouteTablePrivateSubnet1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref MyPrivateRouteTable
+      SubnetId: !Ref MyPrivateSubnet1
+
+
+  AssociateRouteTablePrivateSubnet2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref MyPrivateRouteTable
+      SubnetId: !Ref MyPrivateSubnet2
+
+
+
+# -----------------------------------#
+# Security Group
+# -----------------------------------#
+  MyALBSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      VpcId: !Ref MyVPC
+      GroupName: !Sub ALBSG-${NameBase}
+      GroupDescription: Security group for ALB
+      Tags:
+        - Key: Name
+          Value: !Sub ALBSG-${NameBase}
+
+
+  MyEC2SG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      VpcId: !Ref MyVPC
+      GroupName: !Sub EC2SG-${NameBase}
+      GroupDescription: Security group for EC2 instances
+      Tags:
+        - Key: Name
+          Value: !Sub EC2SG-${NameBase}
+
+
+  MyDBSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      VpcId: !Ref MyVPC
+      GroupName: !Sub DBSG-${NameBase}
+      GroupDescription: Security group for RDS
+      Tags:
+        - Key: Name
+          Value: !Sub DBSG-${NameBase}
+
+
+
+# -----------------------------------#
+# Security Group Rules
+# -----------------------------------#
+  ALBSGIngress:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref MyALBSG
+      IpProtocol: tcp
+      FromPort: 443
+      ToPort: 443
+      CidrIp: 126.247.12.95/32
+
+
+  EC2SGIngressHTTP:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref MyEC2SG
+      IpProtocol: tcp
+      FromPort: 80
+      ToPort: 80
+      SourceSecurityGroupId: !Ref MyALBSG
+
+
+  EC2SGIngressSSH:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref MyEC2SG
+      IpProtocol: tcp
+      FromPort: 22
+      ToPort: 22
+      CidrIp: 126.247.12.95/32
+
+  
+  DBSGIngress:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref MyDBSG
+      IpProtocol: tcp
+      FromPort: 3306
+      ToPort: 3306
+      SourceSecurityGroupId: !Ref MyEC2SG
+
+
+
+# -------------------------------------#
+# S3
+# -------------------------------------#
+  MyS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub bucket-${NameBase}
+      Tags:
+        - Key: Name
+          Value: !Sub bucket-${NameBase}
+
+
+
+# -----------------------------------#
+# IAM
+# -----------------------------------#
+  S3AccessRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+
+
+  S3AccessPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: S3AccessPolicy
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - s3:GetObject
+              - s3:putObject
+              - s3:ListBucket
+              - s3:DeleteObject
+              - s3:GetBucketLocation
+            Resource:
+              - arn:aws:s3:::lecture10-bucket
+              - arn:aws:s3:::lecture10-bucket/*
+      Roles:
+        - !Ref S3AccessRole
+
+
+  S3AccessInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: /
+      Roles:
+        - !Ref S3AccessRole
+
+
+# --------------------------------------------#
+# EC2
+# --------------------------------------------#
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref InstanceType
+      IamInstanceProfile: !Ref S3AccessInstanceProfile
+      KeyName: !Ref KeyName
+      ImageId: !Ref EC2InstanceAMI
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: 8
+            VolumeType: gp2
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: true
+          DeviceIndex: 0
+          SubnetId: !Ref MyPublicSubnet1
+          GroupSet: 
+            - !Ref MyEC2SG
+      Tags:
+         - Key: Name
+           Value: !Sub MyEC2-${NameBase}
+
+
+
+# ----------------------------------------------------#
+# ALB
+# ----------------------------------------------------#
+  MyALB:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: !Sub ALB-${NameBase}
+      IpAddressType: ipv4
+      Subnets:
+        - !Ref MyPublicSubnet1
+        - !Ref MyPublicSubnet2
+      SecurityGroups:
+        - !Ref MyALBSG
+      Scheme: internet-facing
+      Type: application
+      Tags:
+        - Key: Name
+          Value: !Sub ALB-${NameBase}
+
+
+  MyALBListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref MyALB
+      Port: 443
+      Protocol: HTTPS
+      Certificates:
+        - CertificateArn: arn:aws:acm:ap-northeast-1:767397686863:certificate/9f62499c-8ef1-4425-a996-34449b8c046a
+      DefaultActions: 
+        - Type: forward
+          TargetGroupArn: !Ref MyTargetGroup
+
+
+# ------------------------------------------------------#
+# TargetGroup
+# ------------------------------------------------------#
+  MyTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: !Sub TargetGroup-${NameBase}
+      VpcId: !Ref MyVPC
+      Protocol: HTTP
+      Port: 80
+      TargetType: instance
+      Targets:
+        - Id: !Ref MyEC2Instance
+      HealthCheckPath: /
+      Matcher:
+        HttpCode: "200"
+      Tags:
+        - Key: Name
+          Value: !Sub TargetGroup-${NameBase}
+    DependsOn: MyEC2Instance 
+
+
+
+# --------------------------------------------------#
+# RDS
+# --------------------------------------------------#
+  MyDBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: Subnet group for RDS
+      SubnetIds:
+        - !Ref MyPrivateSubnet1
+        - !Ref MyPrivateSubnet2
+      Tags:
+        - Key: Name
+          Value: !Sub DBSubnetGroup-${NameBase}
+
+
+  MyDBInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceIdentifier: !Sub DB-${NameBase}
+      AllocatedStorage: 20
+      DBInstanceClass: db.t3.micro
+      Engine: mysql
+      EngineVersion: 8.0.32
+      MasterUsername: admin
+      MasterUserPassword: !Ref DBMasterPassword
+      DBSubnetGroupName: !Ref MyDBSubnetGroup
+      VPCSecurityGroups:
+        - !Ref MyDBSG
+      PubliclyAccessible: false
+      MultiAZ: false
+      StorageType: gp2
+      Tags:
+        - Key: Name
+          Value: !Sub DBInstance-${NameBase}

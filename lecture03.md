@@ -2,22 +2,22 @@
 
 1. サンプルアプリがブラウザで起動できました。  
 
-![browser](images/browser.png)  
+![browser](images/lecture03/browser.png)  
 
 
 2. APサーバーについて。  
  - 名前とバージョン。停止させたらブラウザ起動できなかった。  
  
-![apvr](images/apvr.png)  
-![puma](images/puma.png)  
+![apvr](images/lecture03/apvr.png)  
+![puma](images/lecture03/puma.png)  
 
 3. DBサーバーについて。  
 
 - 名前とバージョン。停止させたら起動できなかった。  
 - rails:構成管理ツール：Bundler  
 
-![sqlvr](images/sqlvr.png)  
-![sql](images/sql.png)  
+![sqlvr](images/lecture03/sqlvr.png)  
+![sql](images/lecture03/sql.png)  
 
 4. 感想  
 サンプルをブラウザで起動させるのがすごく大変だった。時間もかかったし、途中で操作が効かなくなって、何度も作り直しました。  

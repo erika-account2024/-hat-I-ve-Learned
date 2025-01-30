@@ -4,27 +4,27 @@
 ConsoleLoginを確かめました。  
 イベント履歴から検索できる。  
 わかること：名前、ID 日付。  
-![login](images/第６回イベントログイン.png)  
-![イベント](images/第６回イベント.png)  
+![login](images/lecture06/第６回イベントログイン.png)  
+![イベント](images/lecture06/第６回イベント.png)  
   
 ## CloudWatchのALBアラーム  
 アラームの作成。  
 同一トピックから、正常、異常が検出できる。  
 * Healthy
-![正常](images/第６回正常.png)  
-![正常メール](images/第６回正常メール.png)  
+![正常](images/lecture06/第６回正常.png)  
+![正常メール](images/lecture06/第６回正常メール.png)  
 * unHealthy(異常) :ブラウザで確認できませんでした。
-![異常](images/第６回異常.png)  
-![異常メール](images/第６回異常メール.png)  
+![異常](images/lecture06/第６回異常.png)  
+![異常メール](images/lecture06/第６回異常メール.png)  
   
 ## 利用見積もり:第五回を想定。  
 [見積もり料金はこちら](https://calculator.aws/#/estimate?id=fce50a32bfdca23fc90674baac34e96b42dc24c1)  
 [10.18変更しました](https://calculator.aws/#/estimate?id=9feff596fefd2b2fc79aa5859be39e4de322780f)   
 * EC2の料金  
-![free](images/第６回EC2.png)  
+![free](images/lecture06/第６回EC2.png)  
 * 先月の請求(９月分)  
-![９月](images/第６回０９月.png)  
-![コスト](images/第６回コスト表.png)  
+![９月](images/lecture06/第６回０９月.png)  
+![コスト](images/lecture06/第６回コスト表.png)  
   
   
 * 請求が高くついてしまった理由:RDS作成時、無料枠ではないテストや開発環境を選択した様子で複数のアベイラビリティゾーンを所有した状態であった。  
