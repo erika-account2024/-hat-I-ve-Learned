@@ -86,8 +86,8 @@ bin/dev
 *ポート3000を追加。  
 14. ブラウザからアクセス　　
 http://IPアドレス:3000  
-![puma](images/第５puma.png)  
-![puma2](images/第５puma2.png)  
+![puma](images/lecture05/第５puma.png)  
+![puma2](images/lecture05/第５puma2.png)  
       
 ## 画像表示ツールのインストール  
 1. vips(ファイル)をインストール  
@@ -155,8 +155,8 @@ bundle exec puma -C config/puma.rb
 5. ブラウザで確認  
 http://IPアドレス:3000  
   
-![UNIX](images/第５UNIX.png)   
-![UNIX](images/第５UNIX2.png)  
+![UNIX](images/lecture05/第５UNIX.png)   
+![UNIX](images/lecture05/第５UNIX2.png)  
   
 ## Nginx単体起動  
 1. yumのアップデート  
@@ -178,7 +178,7 @@ sudo systemctl start nginx
 8. ブラウザで確認  
 http://IPアドレス  
   
-![Nginx](images/第5Nginx.png)   
+![Nginx](images/lecture05/第5Nginx.png)   
   
 ## Nginxと組み込みサーバー、UNIXsocketを組み合わせてのアプリ作動  
 1. Nginxの設定ファイルを編集  
@@ -221,15 +221,15 @@ sudo systemctl status nginx
 8. ブラウザで確認  
 http://IPアドレス  
   
-![NginxとUNIX](images/第５NginxとUNIX.png)  
-![NginxとUNIX2](images/第５NginxとUNIX.2.png)  
+![NginxとUNIX](images/lecture05/第５NginxとUNIX.png)  
+![NginxとUNIX2](images/lecture05/第５NginxとUNIX.2.png)  
 
   
 ## ALBを設置をしたうえでブラウザで確認
 1. ターゲットグループの作成。
-![ターゲット](images/第５ターゲットグループ.png)
+![ターゲット](images/lecture05/第５ターゲットグループ.png)
 2. ALBの作成
-![ALB](images/第５ALBのドメインネーム.png)
+![ALB](images/lecture05/第５ALBのドメインネーム.png)
 3. ALB用のセキュリティーグループ作成  
 私のパソコン  
 ↓  
@@ -239,7 +239,7 @@ ec2(in:SSH;22;PCのIP,ALBセキュリティグループ;80;HTTP)
 ↓  
 RDS(in:EC2セキュリティーグループ;3306;MYSQL)  
 4. ブラウザで確認  
-![error](images/第５エラー.png)  
+![error](images/lecture05/第５エラー.png)  
 5. configの内容を変更  
 * etc/nginx/nginx.conf  
 server_name ALBのドメインネーム  
@@ -251,7 +251,7 @@ bin/rails dev:cache
 * 静的ファイルや一部の動的なコンテンツが保存され、次回以降のリクエストで再利用される。  
 7. ブラウザで確認  
 ALBドメインネーム  
-![ブラウザ](images/第５ブラウザ.png)  
+![ブラウザ](images/lecture05/第５ブラウザ.png)  
 8. 流れ  
 8-1 ブラウザからALBにアクセス。  
 8-2 ALBからNginxリクエスト転送。(server_nameがALBのドメインと一致しているためリクエスト処理してくれる)  
@@ -295,15 +295,15 @@ config.active.atorage.service:amazon
 # アップロードとダウンロード  
 * ec2(loacal)から  
 aws s3 cp アップロードしたいローカルのファイル名　s3://バケット名/フォルダ名/  
-![ローカル](images/第５：ローカル.png)  
-![ローカル](images/第５ローカルから.png)  
+![ローカル](images/lecture05/第５：ローカル.png)  
+![ローカル](images/lecture05/第５ローカルから.png)  
 * s3から  
-![S3](images/第５：ｓ３.png)  
-![s3](images/第５：ｓ３から.png)  
+![S3](images/lecture05/第５：ｓ３.png)  
+![s3](images/lecture05/第５：ｓ３から.png)  
 ※一部スペルミスやブラウザ不具合から異なる部分あり。  
   
 # 構成図  
-![構成図](images/第五回構成図.drawio.png)  
+![構成図](images/lecture05/第五回構成図.drawio.png)  
 
 # 感想  
 難しさの中に楽しさもあり。わからないことを聞きながら、調べながら進めました。２か月強も費やしてしまった。  
